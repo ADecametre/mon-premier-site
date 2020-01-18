@@ -1,0 +1,1 @@
+<?php session_start(); session_destroy(); ?><script>alert("Déconnexion réussie !");</script></script><meta http-equiv="refresh" content="0;URL=/../../conversation/">
