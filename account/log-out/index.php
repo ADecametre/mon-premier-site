@@ -1,1 +1,0 @@
-<?php session_start(); session_destroy(); echo '<meta http-equiv="refresh" content="0;URL='."http://".$_SERVER['HTTP_HOST'];if(isset($_GET['src'])){echo $_GET['src'];}else{echo "/";}echo '">'; ?><script>alert("Déconnexion réussie !");</script></script>
