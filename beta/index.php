@@ -19,8 +19,10 @@
             $('#'+name).modal('show');
         };
         <?php
-        if(isset($_GET['v_info']) && $_GET['v_info']==true){
-            echo 'setTimeout(function(){m("version");slideO();}, 2000);';
+        if(isset($_GET['m']) && ($_GET['m']=="version" || $_GET['m']=="about" || $_GET['m']=="contact" || $_GET['m']=="b_acc")){
+            echo 'setTimeout(function(){m("'.$_GET['m'].'");';
+            if($_GET['m']=="version"){echo "slideO();";}
+            echo '}, 2000);';
         }
         ?>
     </script>

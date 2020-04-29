@@ -15,6 +15,9 @@ if($_GET['i']=='css'){ include $sl.'files/base/ver.php'; ?>
     #nav2, #navd2{
         opacity:0;
     }
+    #b_div{
+        opacity:0;
+    }
     #r{
         filter:  progid:DXImageTransform.Microsoft.BasicImage(rotation=2);  /* IE6,IE7 */
         ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)"; /* IE8 */
@@ -384,8 +387,7 @@ $(document).ready(function(){
     '<!-- Contact -->');
     include $sl.'files/base/contact.php';
     include $sl.'files/base/ver.php';
-    echo '</div><div>';
-    include $sl.'files/base/beta.php';
+    echo '</div>';
     
     ol_echo('
     <div width="50%">'.
@@ -427,6 +429,7 @@ $(document).ready(function(){
     ');
     
     echo '</div>';
+    include $sl.'files/base/beta.php';
     
 
 } ?>

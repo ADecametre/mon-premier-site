@@ -4,6 +4,7 @@ if($_GET['i']=='js'){
     <script>
     $(document).ready(function(){
         $("#b_logout").slideUp(0);
+        $("#b_div").fadeTo(125, 1);
         /*var beta = 0;
         $("#s20 div div h6 small small small small i").click(function(){
             beta++;
@@ -43,6 +44,9 @@ if($_GET['i']=='js'){
             }, 2000);
         <?php // } ?>
         console.log("<?php // echo $_SERVER["SCRIPT_NAME"] ?>")*/
+        <?php if(isset($GLOBALS['b_pass']) && $GLOBALS['b_pass']==false){
+            echo 'setTimeout(function(){$("#b_acc").modal("show")},2000);';
+        } ?>
     });
     </script>
 <?php }else if($_GET['i']=='html'){

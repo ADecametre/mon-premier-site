@@ -1,10 +1,15 @@
 <?php
 
-sql("SELECT `v`, `date`, `hour` FROM `ver` ORDER BY `v` ASC", null, '
-    if(date_create_from_format("d/m/y H:i", date("d/m/y H:i"))>=date_create_from_format("d/m/y H:i", $row["date"]." ".$row["hour"]) && strpos($row["date"], "?")===false){
-        $GLOBALS["cv1"]=$row["v"];
-    }
-');
+// sql("SELECT `v`, `date`, `hour` FROM `ver` ORDER BY `v` ASC", null, '
+//     if(date_create_from_format("d/m/y H:i", date("d/m/y H:i"))>=date_create_from_format("d/m/y H:i", $row["date"]." ".$row["hour"]) && strpos($row["date"], "?")===false){
+//         $GLOBALS["cv1"]=$row["v"];
+//     }
+// ');
+// sql("SELECT `v`, `date`, `hour` FROM `ver` ORDER BY `v` DESC", null, '
+//     if(date_create_from_format("d/m/y H:i", date("d/m/y H:i"))<date_create_from_format("d/m/y H:i", $row["date"]." ".$row["hour"]) && strpos($row["date"], "?")===false){
+//         $GLOBALS["fv1"]=$row["v"];
+//     }
+// ');
 if(
     ($GLOBALS['b_pass']==false && sql('SELECT `'.$_GET['b_page'].'` FROM `b_code` WHERE `code`="default-'.$GLOBALS["cv1"].'"', "r", $_GET['b_page'])==1) 
     || 

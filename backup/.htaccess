@@ -1,0 +1,7 @@
+
+# HTID:13688399: DO NOT REMOVE OR MODIFY THIS LINE AND THE LINES BELOW
+AuthType Basic
+AuthName "Restricted Access"
+AuthUserFile "/storage/ssd2/675/1519675/public_html/backup/.htpasswd"
+Require user briad9
+# DO NOT REMOVE OR MODIFY THIS LINE AND THE LINES ABOVE HTID:13688399:

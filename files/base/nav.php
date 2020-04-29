@@ -33,6 +33,17 @@ if($_GET['i']=='css'){ ?>
     td.actc{
         background:radial-gradient(circle, #00e200 0%, #00e200 50%, transparent 100%);
     }
+    #cdwn, #m_cdwn{
+        opacity:0;
+        margin:10px 33%;
+        background-color:yellow;
+        border-radius:20px;
+        text-align:center;
+    }
+    #cdwn h2, #m_cdwn h2{
+        line-height:0.6;
+        margin:10px 0 15px 0;
+    }
 </style>
 <style id="logo_pos"></style>
 <style id="nfix"></style>
@@ -75,6 +86,20 @@ if($_GET['i']=='css'){ ?>
             document.getElementById("n2fix").innerHTML = '#nav2{position:fixed!important}#navd2{background-color: rgba(0,0,0,.1);border-radius: 20px}'+
             'h3.vw{font-size:5vw;}h5.vw{font-size:4vw}h6.vw{font-size:3vw}li.lev1{font-size:5vw!important;}li.lev2{font-size:3vw!important;}';
         }
+    /////   B E T A   T I M E R
+        if(window.mobile==true){
+            cdwn_m="m_";
+        }else{
+            cdwn_m="";
+        }
+        setInterval(function(){
+            <?php require $sl."files/base/cdwn.php" ?>
+            
+            if (typeof cdwn_output !== 'undefined'){
+                $("#"+cdwn_m+"cdwn").css({"border": "2px black ridge"});
+                $("#"+cdwn_m+"cdwn h2").html(cdwn_output);
+            }
+        }, 1000);
     /////   I N T R O   A N I M A T I O N
     	$("#logo").fadeOut(0);
     	$("#logo").animate({opacity: '1'}, 0);
@@ -99,7 +124,7 @@ if($_GET['i']=='css'){ ?>
             }
     	}, 750);
     	setTimeout(function(){
-            $("#nav").fadeTo(500, 1);
+            $("#nav, #cdwn, #m_cdwn").fadeTo(500, 1);
         }, 850);
         setTimeout(function(){
     	    if(window.mobile==true){
@@ -107,55 +132,73 @@ if($_GET['i']=='css'){ ?>
     	        $("#logo1").fadeOut();
     	        $("div#nav").animate({
     	            height: '75px'
-    	        }, 0);
+    	        }, 250);
     	        $("table.nav").animate({
     	            height: '75px'
     	        }, 250);
+    	        $("#home").fadeOut(75);
+    	        setTimeout(function() {
+                    $("#logo").fadeIn(75);
+    	        }, 75);
     	    }
-        }, 1250);
+        }, 1000);
         setTimeout(function(){
             $("#content").fadeTo(500, 1);
         }, 1500);
     	
-    	    window.navSc=function(){
-    	    setInterval(function() {
-    	        //document.getElementById("test").innerHTML = window.mobile;
-			    if((window.pageYOffset>130 && window.mobile==false) || window.mobile==true){
-    			    $("div#nav").animate({width: '97.5%', left: '1.25%', right: '1.25%'}, 250);
-                    //$("#home").animate({opacity: '0', top: '-100px'});
-                    //$("#logo").animate({opacity: '1', top: '0px'});
-                    $("#home").fadeOut(250);
-                    $("table.nav").animate({height: '75px'}, 250);
-                    setTimeout(function() {
-                        $("#logo").fadeIn(250);
-                        //$("#logo1").animate({opacity: '0'});
-                        if(window.mobile==false){
-                            $("#logo1").fadeTo(250, 0);
-                        }
-                        //$("#logo1").fadeOut(250);
-                    }, 250);
-    		    }else{
-    			    $("div#nav").animate({width: '75%', left: '12.5%', right: '12.5%'}, 250);
-                    //$("#home").animate({opacity: '1', top: '0px'});
-                    //$("#logo").animate({opacity: '0', top: '100px'});
-                    $("#logo").fadeOut(250);
-                    $("table.nav").animate({height: '56px'}, 250);
-                    setTimeout(function(){
-                        $("#home").fadeIn(250);
-                        //$("#logo1").animate({opacity: '1'});
-                        $("#logo1").fadeTo(250, 1);
-                        //$("#logo1").fadeIn(250);
-                    }, 250);
-    		    }
-                //document.getElementById("nav").innerHTML = Math.round(window.pageYOffset);
-		    }, 500);
-    	    }
-    	setTimeout(function(){
-    	    navSc();
-    	}, 1250);
+    	
+	    window.pos="top";
+        window.navAn=function(type){
+        switch(type){
+            case "bot":
+                
+                $("div#nav").css("position", "fixed");
+			    $("div#nav").animate({width: '97.5%', left: '1.25%', right: '1.25%', top: '0px'}, 150);
+                $("#home").fadeOut(75);
+                $("table.nav").animate({height: '75px'}, 150);
+                setTimeout(function() {
+                    $("#logo").fadeIn(75);
+                    $("#logo1").fadeTo(75, 0);
+                }, 75);
+                window.pos="bot";
+                
+                break;
+            case "top":
+                
+                $("div#nav").css("position", "relative");
+			    $("div#nav").animate({width: '75%', left: '12.5%', right: '12.5%', top: 'auto'}, 150);
+                $("#logo").fadeOut(75);
+                $("table.nav").animate({height: '56px'}, 150);
+                setTimeout(function(){
+                    $("#home").fadeIn(75);
+                    $("#logo1").fadeTo(75, 1);
+                }, 75);
+                window.pos="top";
+                
+                break;
+        }
+        }
+        window.navSc=function(){
+		    if(window.pageYOffset>130 && window.pos=="top"){
+                navAn("bot");
+		    }else if(window.pageYOffset<130 && window.pos=="bot"){
+                navAn("top");
+		    }
+	    }
+        setTimeout(function(){
+            navSc();
+            if(window.mobile!=true){
+                setInterval(function(){
+                    navSc();
+                }, 150);
+            }
+        }, 1250);
+	    
+	    
 	});
 </script>
 <?php }else if($_GET['i']=='html'){$ach="";$acp="";if($_SERVER['PHP_SELF']=="/index.php"){$ach=" actc";}else if(substr_count($_SERVER['PHP_SELF'],"/projets")>0){$acp=" actc";} echo preg_replace( "/\s\s+/", " ", '
+    <div id="cdwn"><h2></h2><h4></h4></div>
     <div id="dlogo1" align="center">
         <img id="logo1" src="/files/base/y-logo/'.date("Y").'.png" />
     </div>
@@ -163,7 +206,7 @@ if($_GET['i']=='css'){ ?>
         <table class="nav" width="100%" align="center">
             <tbody class="nav">
                 <tr class="nav" style="display:inline-flex">
-                    <td class="nav" width="33%" align="center"><h3 class="vw" align="center" title="Bientôt disponible" style="cursor:not-allowed">Programmes</h3></td>
+                    <td class="nav" width="33%" align="center"><h3 class="vw" align="center" title="Bientôt disponible" style="cursor:not-allowed;opacity:0.66">Programmes</h3></td>
                     <td class="nav navc'.$ach.'" width="34%" align="center"><a style="color:black" href="/">
                         <h3 class="vw" align="center" id="home"><img style="top:0px;position:relative" width="30px" height="25px" src="/files/base/home.png"></h3>
                         <img style="top:2px;position:relative" id="logo" width="75px" src="/files/base/y-logo/'.date("Y").'.png" />
@@ -173,4 +216,5 @@ if($_GET['i']=='css'){ ?>
             </tbody>
         </table>
     </div>
+    <div id="m_cdwn"><h2></h2><h4></h4></div>
 ');} ?>
